@@ -91,6 +91,17 @@ function loadReportingData() {
         }
         planetRow.insertBefore(newDataColumnElement, planetRow.querySelector("td:last-of-type"));
     }
+
+    // code below is needed to allow displaying tooltips with spy reports
+    $(".tooltip_sticky").on({
+        mouseenter: function (e) {
+            let tip = $('#tooltip');
+            tip.html($(this).attr('data-tooltip-content'));
+            tip.addClass('tooltip_sticky_div');
+            tip.css({top: e.pageY - tip.outerHeight() / 2, left: e.pageX - tip.outerWidth() / 2});
+            tip.show();
+        }
+    });
 }
 
 (function () {
