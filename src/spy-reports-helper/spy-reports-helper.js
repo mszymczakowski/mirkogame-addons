@@ -14,12 +14,15 @@ const LAST_SCAN_TEMPLATE_ELEMENT = "<div class='tooltip_sticky' data-tooltip-con
 function getLocalStorageData() {
     let result = localStorage.getItem(STORAGE_KEY);
 
-    if (!result) {
-        result = "{}";
-        setLocalStorageData(result);
+    if (result) {
+        const parsedResult = JSON.parse(result);
+
+        if (typeof parsedResult === "object") {
+            return parsedResult;
+        }
     }
 
-    return JSON.parse(result);
+    return {};
 }
 
 function setLocalStorageData(data) {
