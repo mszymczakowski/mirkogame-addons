@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mirkogame - SpyReportsHelper
 // @namespace    https://github.com/mszymczakowski/mirkogame-addons
-// @version      0.1.1
+// @version      0.1.2
 // @description  Shows last spy reports in galaxy view.
 // @author       mszymczakowski
 // @match        https://mirkogame.pl/**
@@ -14,12 +14,15 @@ const LAST_SCAN_TEMPLATE_ELEMENT = "<div class='tooltip_sticky' data-tooltip-con
 function getLocalStorageData() {
     let result = localStorage.getItem(STORAGE_KEY);
 
-    if (!result) {
-        result = "{}";
-        setLocalStorageData(result);
+    if (result) {
+        const parsedResult = JSON.parse(result);
+
+        if (typeof parsedResult === "object") {
+            return parsedResult;
+        }
     }
 
-    return JSON.parse(result);
+    return {};
 }
 
 function setLocalStorageData(data) {
@@ -88,6 +91,17 @@ function loadReportingData() {
         }
         planetRow.insertBefore(newDataColumnElement, planetRow.querySelector("td:last-of-type"));
     }
+
+    // code below is needed to allow displaying tooltips with spy reports
+    $(".tooltip_sticky").on({
+        mouseenter: function (e) {
+            let tip = $('#tooltip');
+            tip.html($(this).attr('data-tooltip-content'));
+            tip.addClass('tooltip_sticky_div');
+            tip.css({top: e.pageY - tip.outerHeight() / 2, left: e.pageX - tip.outerWidth() / 2});
+            tip.show();
+        }
+    });
 }
 
 (function () {
