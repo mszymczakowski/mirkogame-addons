@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mirkogame - SpyReportsHelper
 // @namespace    https://github.com/mszymczakowski/mirkogame-addons
-// @version      0.1.1
+// @version      0.1.2
 // @description  Shows last spy reports in galaxy view.
 // @author       mszymczakowski
 // @match        https://mirkogame.pl/**
